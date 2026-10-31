@@ -1,0 +1,9 @@
+{
+  "rows_train": 21105,
+  "rows_test": 5277,
+  "mae_usd": 26299,
+  "median_abs_error_usd": 14826,
+  "r2_log_salary": 0.64,
+  "baseline_country_median_mae_usd": 30525,
+  "share_inside_p25_p75": 0.502
+}

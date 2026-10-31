@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Developer Salary Prediction</title>
+  <meta name="description" content="Estimate a developer's annual salary from country, role, education, work arrangement, and experience. Gradient-boosted model trained on the 2022 Stack Overflow Developer Survey.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230E3B43'/%3E%3Cpath d='M7 23l6-7 5 4 7-10' stroke='%23F4B860' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>What do developers like you earn?</h1>
+      <p class="lede">An estimate from <span id="rows">26,000+</span> full-time professional developers who answered the 2022 Stack Overflow Developer Survey. The model runs in your browser; nothing you enter leaves this page.</p>
+    </header>
+
+    <section class="grid">
+      <form id="form" class="panel" aria-label="Your profile">
+        <label>Country<select id="country"></select></label>
+        <label>Role<select id="role"></select></label>
+        <label>Highest education<select id="education"></select></label>
+        <label>Work arrangement<select id="remote"></select></label>
+        <label>Years of professional coding <output id="years-out">3</output>
+          <input id="years" type="range" min="0" max="40" step="0.5" value="3">
+        </label>
+      </form>
+
+      <section class="panel result" aria-live="polite">
+        <p class="k">Estimated annual salary (USD)</p>
+        <p class="big" id="mid">...</p>
+        <div class="band" aria-hidden="true"><div class="band-bar" id="band-bar"><span class="dot" id="band-dot"></span></div></div>
+        <p class="range" id="range"></p>
+        <p class="fine">The range is the model's 25th to 75th percentile: about half of developers with this profile earned inside it.</p>
+      </section>
+    </section>
+
+    <section class="panel">
+      <h2>How pay moves with experience</h2>
+      <p class="fine">Predicted salary for your current selections at every experience level. The shaded area is the 25th–75th percentile range.</p>
+      <svg id="curve" viewBox="0 0 640 240" role="img" aria-label="Predicted salary by years of experience"></svg>
+    </section>
+
+    <section class="cols">
+      <div class="panel"><h2>Median pay by country</h2><div id="by-country" class="bars"></div></div>
+      <div class="panel"><h2>Median pay by role</h2><div id="by-role" class="bars"></div></div>
+    </section>
+
+    <section class="panel about">
+      <h2>About the model</h2>
+      <p>Gradient-boosted trees (scikit-learn) predict log annual pay from five inputs. Two extra models trained with quantile loss give the 25th and 75th percentiles. The exported trees reproduce scikit-learn's predictions exactly.</p>
+      <table id="metrics"></table>
+      <p class="fine">Limits: self-reported 2022 pay converted to USD by Stack Overflow; respondents are not a random sample of developers; company, city, and skills are not modeled. Countries with fewer than 200 responses are grouped as Other.</p>
+      <p class="fine">Data: <a href="https://survey.stackoverflow.co/2022/">Stack Overflow Developer Survey 2022</a>, licensed under the Open Database License. Code: <a href="https://github.com/snehalbhatnagar/SalaryPrediction">github.com/snehalbhatnagar/SalaryPrediction</a>.</p>
+    </section>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
